@@ -59,15 +59,11 @@ def gravar_informacoes_excel(obj_sped, dic,
     dic_operacoes_saidas = {}
     lista_datas = []
     
-   
-    print('\n')
-    print(f'Gravando resultado no excel => CNPJ {obj_sped.CNPJ}')
-    print('\n')
-    sleep(2)
+    print(obj_sped)
+    sleep(5)
     with open('log.txt', 'a') as log:
         for nota in obj_sped.notas:
-            IE = obj_sped.CNPJ
-            
+
             data = nota.campos_c100[11]
             for iten in nota.itens_c190:
 
@@ -80,43 +76,43 @@ def gravar_informacoes_excel(obj_sped, dic,
                 if CFOP_VERIF >= 5:
 
                     if operacao:
-                        if not dic_operacoes_saidas.get(int(operacao.split('-')[0])):
-                            dic_operacoes_saidas = dados.criar_nova_operacao(
-                                dic_operacoes_saidas, operacao, CFOP, data)
-                        if not dic_operacoes_saidas[int(operacao.split('-')[0])].get(CFOP):
-                            dic_operacoes_saidas = dados.criar_novo_CFOP(
-                                dic_operacoes_saidas, operacao, CFOP, data)
-                        dic_operacoes_saidas = dados.atualizar_dados(
-                            dic_operacoes_saidas, operacao, CFOP, data, valor)
+                        if not Dics.dic_operacoes_saidas.get(int(operacao.split('-')[0])):
+                            Dics.dic_operacoes_saidas = dados.criar_nova_operacao(
+                                Dics.dic_operacoes_saidas, operacao, CFOP, data)
+                        if not Dics.dic_operacoes_saidas[int(operacao.split('-')[0])].get(CFOP):
+                            Dics.dic_operacoes_saidas = dados.criar_novo_CFOP(
+                                Dics.dic_operacoes_saidas, operacao, CFOP, data)
+                        Dics.dic_operacoes_saidas = dados.atualizar_dados(
+                            Dics.dic_operacoes_saidas, operacao, CFOP, data, valor)
 
                 else:
 
                     if operacao:
-                        if not dic_operacoes_entradas.get(int(operacao.split('-')[0])):
-                            dic_operacoes_entradas = dados.criar_nova_operacao(
-                                dic_operacoes_entradas, operacao, CFOP, data)
-                        if not dic_operacoes_entradas[int(operacao.split('-')[0])].get(CFOP):
-                            dic_operacoes_entradas = dados.criar_novo_CFOP(
-                                dic_operacoes_entradas, operacao, CFOP, data)
-                        dic_operacoes_entradas = dados.atualizar_dados(
-                            dic_operacoes_entradas, operacao, CFOP, data, valor)
+                        if not Dics.dic_operacoes_entradas.get(int(operacao.split('-')[0])):
+                            Dics.dic_operacoes_entradas = dados.criar_nova_operacao(
+                                Dics.dic_operacoes_entradas, operacao, CFOP, data)
+                        if not Dics.dic_operacoes_entradas[int(operacao.split('-')[0])].get(CFOP):
+                            Dics.dic_operacoes_entradas = dados.criar_novo_CFOP(
+                                Dics.dic_operacoes_entradas, operacao, CFOP, data)
+                        Dics.dic_operacoes_entradas = dados.atualizar_dados(
+                            Dics.dic_operacoes_entradas, operacao, CFOP, data, valor)
 
                 if not operacao and (CFOP not in lista_tipos_inex):
                     lista_tipos_inex.append(CFOP)
                     print(f'CFOP {CFOP} nao cadastrado', file=log)
         if log:
-            print(f'Arquivo Inscrição Estadual {IE} gerado com sucesso!!', file=log)
+            print('Arquivo gerado com sucesso!!', file=log)
 
         # dicionario gerado com erro
-        # print(dic_operacoes_saidas)
+        # print(Dics.dic_operacoes_saidas)
 
 
         pasta_trabalho.inserir_dados(
-            dic_operacoes_entradas, lista_tipos_inex)
+            Dics.dic_operacoes_entradas, lista_tipos_inex)
         pasta_trabalho.criar_nova_plan(
             obj_sped.CNPJ, 0)
         pasta_trabalho.inserir_dados(
-            dic_operacoes_saidas, lista_tipos_inex)
+            Dics.dic_operacoes_saidas, lista_tipos_inex)
         pasta_trabalho.criar_nova_plan(
             obj_sped.CNPJ, 34)
 
@@ -142,7 +138,7 @@ def percorrer_arquivo_sped(pasta, dic, primeira_passada):
     pasta_trabalho = criar_plan.PastaTrabalho(pd)
 
     for diretorio, subpastas, arquivos in os.walk(pasta):
-        # print(arquivos)
+        print(arquivos)
         for arquivo in arquivos:
             # pasta_trabalho = criar_plan.PastaTrabalho(pd)
             sped = os.path.join(diretorio, arquivo)

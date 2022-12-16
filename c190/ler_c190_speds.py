@@ -32,6 +32,9 @@ def ler_c190_arquivos_sped(pasta, primeira_passada):
     pasta_trabalho = criar_plan.PastaTrabalho(pd)
     for diretorio, subpastas, arquivos in os.walk(pasta):
         for arquivo in arquivos:
+            print('\n')
+            print(f'Lendo sped fiscal {arquivo}')
+            print('\n')
             sped = os.path.join(diretorio, arquivo)
             if eh_arquivo_txt(arquivo.split('.')[-1]):
                 with open(sped, encoding='ansi') as arquivo_sped:

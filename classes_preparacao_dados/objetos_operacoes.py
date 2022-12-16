@@ -100,4 +100,4 @@ if __name__ == '__main__':
     dic_operacoes = pesquisa_operacao(
         dic_operacoes, 'Compras', '1403', '07-01-2022', 250)
     gravar_excel(df, dic_operacoes)
-    # print(dic_operacoes)
+    print(dic_operacoes)

@@ -82,6 +82,7 @@ def criar_nova_operacao(dic_operacoes, operacao, CFOP, data):
     dic_operacoes[int(operacao.split('-')[0])
                   ].update(dicionario_total_operacao)
 
+    # print(dic_operacoes)
     return dic_operacoes
 
 
@@ -108,6 +109,7 @@ def atualizar_dados(dic_operacoes, operacao, CFOP, data, valor):
     dic_operacoes[int(operacao.split(
         '-')[0])][operacao.split('-')[1]]['TOTAL'] += valor
     
+    # print(dic_operacoes)
 
     return dic_operacoes
 
